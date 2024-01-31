@@ -1,0 +1,22 @@
+.btn{
+    margin: auto;
+    margin-bottom: -5px;
+}
+
+li input:checked~ .input{
+    text-decoration: line-through black;
+}
+
+
+p{
+    padding-left: 20px;
+    flex-grow: 1;
+}
+
+li{
+    align-items: center;
+      border: 5px solid teal;
+      justify-content: center;
+      display: flex;
+  }
+
