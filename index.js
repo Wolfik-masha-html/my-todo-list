@@ -2,110 +2,80 @@ const list = document.querySelector(".list");
 const input = document.querySelector(".input");
 const btn = document.querySelector(".btn");
 
-let tasks=[]
+let tasks = [];
+
+
+console.log(tasks);
+
+const renderTodo = (items = []) => {
+  console.log(items)
+  const marcup = items
+    .map((item) => {
+      return `<li>
+      <label class="label">
+      <input type="checkbox" class="ckeckbox" onchange="toggleTask(${
+        item.id
+      })" ${item.completed ? "checked" : ""} />
+      </label>
+      <p class="${item.completed ? "completed" : ""}" >${item.text}</p>
+      <button onclick="removeTodo(${item.id})">Видалити</button>
+      </li>`;
+    })
+    .join("");
+  list.innerHTML = marcup;
+};
+
+
+document.addEventListener("DOMContentLoaded", () => {
+  const currentTask = localStorage.getItem("task");
+  if (currentTask) {
+    console.log(currentTask, "таски в локал сторежі");
+    tasks = JSON.parse(currentTask);
+    renderTodo(tasks);
+  }
+});
+
+const toggleTask = (id) => {
+  // const taskIndex = tasks.findIndex((item) => item.id===id)
+  // tasks[taskIndex].completed = !tasks[taskIndex].completed
+  tasks = tasks.map((task) =>
+    task.id === id ? { ...task, completed: !task.completed } : task
+  );
+  renderTodo(tasks);
+  localStorage.setItem("task", JSON.stringify(tasks));
+};
+
 
 const todoHandler = () => {
-  if (input.value.trim()!=="") {
-    const dataText = input.value
-    const rundomNumber = Math.round(Math.random() * 100000)
+  if (input.value.trim() !== "") {
+    const dataText = input.value;
+    const rundomNumber = Math.round(Math.random() * 100000);
     const task = {
-      id:rundomNumber,
-      text:dataText,
-      completed:false
-      
-    }
-    tasks.push(task)
-    input.value=""
+      id: rundomNumber,
+      text: dataText,
+      completed: false,
+    };
+    tasks.push(task);
+    console.log(task);
+    input.value = "";
+    console.log(JSON.stringify(tasks));
+    localStorage.setItem("task", JSON.stringify(tasks));
   }
-  console.log(tasks);
-}
+};
 
+console.log();
 
-btn.addEventListener("click",(event)=>{
-  event.preventDefault()
-  todoHandler()
-  renderTodo(tasks)
-})
+btn.addEventListener("click", (event) => {
+  event.preventDefault();
+  todoHandler();
+  renderTodo(tasks);
+  const newtask = list;
+  localStorage.setItem("newtask", JSON.stringify(newtask)); //переводимо обєкт в стрічку
+});
 
-document.addEventListener("DOMContentLoaded", ()=>{
-    const themToglebtn = document.querySelector(".btn");
-    const curenttThem = localStorage.getItem("them");
-
-
-    if (curenttThem) {
-        applyThem(curenttThem)
-    }
-
-
-themToglebtn.addEventListener("click",()=>{
-    const newThem =document.body.classList.contains("dark")?"light":"dark"
-    applyThem(newThem);
-    localStorage.setItem("them",newThem)
-
-  
-})
-
-function applyThem(them){
-    document.body.classList.add(them)
-}
-})
-
-
-
-
-function renderTodo(items) {
-  const marcup = items.
-  map((item)=>{
-    return `<li>
-    <label class="label">
-    <input type="checkbox" class="checkbox" cheked="${item.completed}">
-    <span class="custom__radio"></span>
-    </label>
-    <p>${item.text}</p>
-    <button onclick="removeTodo(${item.id})">Видалити</button>
-    </li>`
-  })
-  .join("")
-  console.log(marcup);
- // localStorage.setItem('marcup', marcup);  
- // list.innerHTML=localStorage.getItem('marcup');
-  list.innerHTML=marcup
-  
-}
-
-// function removeTodo(id) {
-//   const filteredTasks = tasks.filter((item)=>item.id!==id)
-//   tasks=filteredTasks
-// }
-
-window.removeTodo=function (id) {
-  const filteredTasks = tasks.filter((item)=>item.id!==id)
-  tasks=filteredTasks
-  renderTodo(tasks) 
-  
-}
-
-document.addEventListener("DOMContentLoaded", ()=>{
-  const themToglebtn = document.querySelector("btn");
-  const curenttTask = localStorage.getItem("task");
-
-
-  if (curenttTask) {
-      applyTask(curenttTask)
-  }
-
-
-themToglebtn.addEventListener("click",()=>{
-  const newTask =document.body.classList.contains("task");
-  applyTask(newTask);
-  localStorage.setItem("task",JSON.stringify(tasks))
-})
-
-function applyTask(task){
-  document.body.classList.add(task)
-  
-}
-})
-
-localStorage.setItem('task', 1);
-
+window.removeTodo = function (id) {
+  const filteredTasks = tasks.filter((item) => item.id !== id);
+  tasks = filteredTasks;
+  renderTodo(tasks);
+  localStorage.setItem("task", JSON.stringify(tasks));
+};
