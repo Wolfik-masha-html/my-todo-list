@@ -4,36 +4,34 @@ const btn = document.querySelector(".btn");
 
 let tasks = [];
 
-
-console.log(tasks);
-
-const renderTodo = (items = []) => {
-  console.log(items)
-  const marcup = items
-    .map((item) => {
-      return `<li>
+const renderTodo = (items) => {
+  const marcup = items.map((item) => {
+      return( `<li>
       <label class="label">
       <input type="checkbox" class="ckeckbox" onchange="toggleTask(${
         item.id
       })" ${item.completed ? "checked" : ""} />
       </label>
       <p class="${item.completed ? "completed" : ""}" >${item.text}</p>
-      <button onclick="removeTodo(${item.id})">Видалити</button>
-      </li>`;
+      <button class="libtn" onclick="removeTodo(${item.id})">Видалити</button>
+      </li>`)
     })
     .join("");
   list.innerHTML = marcup;
 };
-
 
 document.addEventListener("DOMContentLoaded", () => {
   const currentTask = localStorage.getItem("task");
   if (currentTask) {
     console.log(currentTask, "таски в локал сторежі");
     tasks = JSON.parse(currentTask);
+    console.log(tasks,"task")
     renderTodo(tasks);
   }
 });
+
+console.log(tasks);
+
 
 const toggleTask = (id) => {
   // const taskIndex = tasks.findIndex((item) => item.id===id)

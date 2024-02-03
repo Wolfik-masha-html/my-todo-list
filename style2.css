@@ -1,6 +1,6 @@
-.btn{
-    margin: auto;
-    margin-bottom: -5px;
+
+*{
+    box-sizing: border-box;
 }
 
 li input:checked~ .input{
@@ -8,15 +8,43 @@ li input:checked~ .input{
 }
 
 
+li{
+    align-items: center;
+      border: 5px solid teal;
+      margin-top: 10px;
+      justify-content: center;
+      display: flex;
+      border-radius: 7px;
+     
+  }
+
+.btn{
+    margin-left: 10px;
+    margin-bottom: -5px;
+    color: black;
+    background-color: teal;
+    border-radius: 12px;
+    padding: 7px;
+}
+
+
+.libtn{
+    margin-right: 20px;
+    color: black;
+    background-color: teal;
+    border-radius: 10px;
+}
+
 p{
     padding-left: 20px;
     flex-grow: 1;
 }
 
-li{
-    align-items: center;
-      border: 5px solid teal;
-      justify-content: center;
-      display: flex;
-  }
+.completed{
+    text-decoration: line-through black;
+}
 
+
+.input{
+padding: 7px;
+}
